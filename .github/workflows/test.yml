@@ -33,7 +33,7 @@ jobs:
       run: pytest -v --alluredir=allure-results
 
     - name: 上传 Allure 报告
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: allure-report
