@@ -1,0 +1,21 @@
+{
+	"id": "f0a2fc12-5ae9-4569-8bad-6ebeb1823faa",
+	"values": [
+		{
+			"key": "day",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "days",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "hee's Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2026-04-08T03:49:06.127Z",
+	"_postman_exported_using": "Postman/12.5.3"
+}

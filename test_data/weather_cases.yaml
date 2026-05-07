@@ -1,0 +1,92 @@
+# ========== 城市搜索接口 ==========
+- case_id: "TC_WEATHER_001"
+  case_name: "城市搜索-正常场景（北京）"
+  path: "/geo/v2/city/lookup"
+  use_geo: true
+  params:
+    location: "北京"
+  expect_code: "200"
+  expect_key: "location"
+
+- case_id: "TC_WEATHER_002"
+  case_name: "城市搜索-正常场景（上海）"
+  path: "/geo/v2/city/lookup"
+  use_geo: true
+  params:
+    location: "上海"
+  expect_code: "200"
+  expect_key: "location"
+
+- case_id: "TC_WEATHER_003"
+  case_name: "城市搜索-location为空"
+  path: "/geo/v2/city/lookup"
+  use_geo: true
+  params:
+    location: ""
+  expect_code: "400"
+  expect_http_status: 400
+
+# ========== 实况天气接口 ==========
+- case_id: "TC_WEATHER_004"
+  case_name: "实况天气-正常场景（北京）"
+  path: "/weather/now"
+  use_geo: false
+  params:
+    location: "101010100"
+  expect_code: "200"
+  expect_key: "now"
+
+- case_id: "TC_WEATHER_005"
+  case_name: "实况天气-正常场景（上海）"
+  path: "/weather/now"
+  use_geo: false
+  params:
+    location: "101020100"
+  expect_code: "200"
+  expect_key: "now"
+
+- case_id: "TC_WEATHER_006"
+  case_name: "实况天气-location为空"
+  path: "/weather/now"
+  use_geo: false
+  params:
+    location: ""
+  expect_code: "400"
+  expect_http_status: 400
+
+- case_id: "TC_WEATHER_007"
+  case_name: "实况天气-location不存在"
+  path: "/weather/now"
+  use_geo: false
+  params:
+    location: "999999999"
+  expect_code: "400"
+  expect_http_status: 400
+
+# ========== 7天预报接口 ==========
+- case_id: "TC_WEATHER_008"
+  case_name: "7天预报-正常场景（北京）"
+  path: "/weather/7d"
+  use_geo: false
+  params:
+    location: "101010100"
+  expect_code: "200"
+  expect_key: "daily"
+
+- case_id: "TC_WEATHER_009"
+  case_name: "7天预报-正常场景（上海）"
+  path: "/weather/7d"
+  use_geo: false
+  params:
+    location: "101020100"
+  expect_code: "200"
+  expect_key: "daily"
+
+- case_id: "TC_WEATHER_010"
+  case_name: "7天预报-location为空"
+  path: "/weather/7d"
+  use_geo: false
+  params:
+    location: ""
+  expect_code: "400"
+  expect_http_status: 400
