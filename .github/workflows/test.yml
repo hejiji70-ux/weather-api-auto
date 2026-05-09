@@ -1,40 +1,56 @@
-name: API 自动化测试
+# ==========================================
+# GitHub Actions 工作流：API 自动化测试
+# ==========================================
+# 触发条件：每次推送到 main 分支时自动运行
+# 运行环境：Ubuntu 云服务器
+# 步骤：检出代码 → 安装 Python → 安装依赖 → 创建配置 → 运行测试 → 上传报告
+
+name: API 自动化测试  # 工作流名称，会显示在 Actions 页面
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # 每当 main 分支有代码推送，就自动触发
   pull_request:
-    branches: [ main ]
+    branches: [ main ]  # 当有人向 main 分支发起拉取请求，也会触发
 
+# ========== 任务定义 ==========
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test:  # 任务名称
+    runs-on: ubuntu-latest   # 运行的操作系统：最新版 Ubuntu
 
     steps:
+    # 步骤1：把仓库代码下载到云服务器
     - name: 检出代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3   # 使用 GitHub 官方的 checkout 动作
 
+    # 步骤2：安装 Python 3.10
     - name: 安装 Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4   # 使用 GitHub 官方的 setup-python 动作
       with:
         python-version: '3.10'
 
+    # 步骤3：安装项目依赖（pytest、requests、allure-pytest 等）
     - name: 安装依赖
       run: |
         pip install -r requirements.txt
 
+    # 步骤4：动态创建 config.yaml
+    # QWEATHER_API_KEY 存储在 GitHub Secrets 中，不暴露在代码里
     - name: 创建配置文件
       run: |
         echo "base_url: 'https://nj65np8ukv.re.qweatherapi.com/v7'" > config/config.yaml
         echo "geo_url: 'https://nj65np8ukv.re.qweatherapi.com'" >> config/config.yaml
         echo "api_key: '${{ secrets.QWEATHER_API_KEY }}'" >> config/config.yaml
 
+    # 步骤5：运行 Pytest 测试，同时生成 Allure 原始数据
     - name: 运行测试
       run: pytest -v --alluredir=allure-results
 
+      # 步骤6：上传 Allure 报告作为工作流产物
+      # if: always() 确保即使测试失败，也上传报告
     - name: 上传 Allure 报告
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4     # 使用 v4 版本（v3 已废弃）
       if: always()
       with:
-        name: allure-report
-        path: allure-results/
+        name: allure-report     # 产物名称
+        path: allure-results/   # 要上传的文件夹路径
