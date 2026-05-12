@@ -1,4 +1,5 @@
 # 和风天气 API 接口自动化测试
+![CI](https://github.com/hejiji70-ux/weather-api-auto/actions/workflows/test.yml/badge.svg)
 
 ## 项目简介
 基于 Python + Requests + Pytest + Allure 的和风天气 API 接口自动化测试框架。
